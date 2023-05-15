@@ -1,0 +1,34 @@
+{% extends 'users/base.html' %} {% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center mb-3">Login</h2>
+      <form method="post" class="border p-3" id="login-form">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.username.label_tag }} {{ form.username }}
+        </div>
+        <div class="form-group">
+          {{ form.password.label_tag }} {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <div class="text-center mt-3">
+        <a href="{% url 'users:customer_registration' %}" class="mr-3"
+          >Sign up as Customer</a
+        >
+        |
+        <a href="{% url 'users:worker_registration' %}">Sign up as Worker</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% comment %}
+<form method="post" action="{% url 'users:resend_activation_link' %}">
+  {% csrf_token %}
+  <label for="email">Enter your email to resend the activation link:</label>
+  <input type="email" name="email" required />
+  <button type="submit">Resend Activation Link</button>
+</form>
+{% endcomment %}

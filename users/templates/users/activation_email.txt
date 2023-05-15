@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hi {{ user.first_name }} {{ user.last_name }},
+
+Thank you for registering on our platform. To activate your account, please click the link below:
+
+http://localhost:8000{% url 'users:activate_account' uidb64=uid token=token %}
+
+If you didn't request this email, please ignore it.
+
+Best regards,
+Freelance House Hold Work Recommender Team
+{% endautoescape %}

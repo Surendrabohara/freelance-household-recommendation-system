@@ -1,0 +1,174 @@
+{% extends 'users/base.html' %} {% block content %} {% if user.is_customer %}
+<div class="container pt-4">
+  <h1 class="text-center pb-4 text-dark">Task List</h1>
+  <div class="row">
+    <div class="col-md-3">
+      <h4 class="pb-3">Requested Tasks</h4>
+      {% if requested_tasks %}
+      <div class="list-group">
+        {% for task in requested_tasks %}
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No requested tasks found.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-3">
+      <h4 class="pb-3">In Progress Tasks</h4>
+      {% if in_progress_tasks %}
+      <div class="list-group">
+        {% for task in in_progress_tasks %}
+
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No tasks in progress.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-3">
+      <h4 class="pb-3">Completed Tasks</h4>
+      {% if completed_tasks %}
+      <div class="list-group">
+        <h5>Yet to be Rated</h5>
+        {% for task in completed_tasks %} {% if task.rating is None %}
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+          >{{ task.title }}</a
+        >
+        {% endif %} {% endfor %}
+        <h5>Already Rated</h5>
+        {% for task in completed_tasks %} {% if task.rating %}
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-success"
+          >{{ task.title }}</a
+        >
+        {% endif %} {% endfor %}
+      </div>
+      {% else %}
+      <p>No completed tasks found.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-3">
+      <h4 class="pb-3">Rejected Tasks</h4>
+      {% if rejected_tasks %}
+      <div class="list-group">
+        {% for task in rejected_tasks %}
+
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No rejected tasks found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% elif user.is_worker %}
+<div class="container pt-4">
+  <h1 class="text-center pb-3">Task List</h1>
+
+  <div class="row">
+    <div class="col-md-3">
+      <h4 class="pb-3">Requested Tasks</h4>
+      {% if requested_tasks %}
+      <div class="list-group">
+        {% for task in requested_tasks %}
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No requested tasks found.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-3">
+      <h4 class="pb-3">In Progress Tasks</h4>
+      {% if in_progress_tasks %}
+      <div class="list-group">
+        {% for task in in_progress_tasks %}
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No tasks in progress.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-3">
+      <h4 class="pb-3">Completed Tasks</h4>
+      {% if completed_tasks %}
+      <div class="list-group">
+        {% for task in completed_tasks %}
+
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No completed tasks found.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-3">
+      <h4 class="pb-3">Rejected Tasks</h4>
+      {% if rejected_tasks %}
+      <div class="list-group">
+        {% for task in rejected_tasks %}
+
+        <a
+          href="{% url 'tasks:task_detail' task.pk %}"
+          class="list-group-item list-group-item-action alert alert-danger"
+        >
+          {{ task.title }}
+        </a>
+
+        {% endfor %}
+      </div>
+      {% else %}
+      <p>No rejected tasks found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% else %} {% endif %} {% endblock %}

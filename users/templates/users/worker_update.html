@@ -1,0 +1,13 @@
+{% extends 'users/base.html' %} {% block content %}
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center">Update Worker Profile</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

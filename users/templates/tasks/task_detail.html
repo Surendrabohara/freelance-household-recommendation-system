@@ -1,0 +1,66 @@
+{% extends 'users/base.html' %} {% block content %}
+<div class="container pt-4">
+  <h1>Task Details</h1>
+  <p><strong>Title:</strong> {{ task.title }}</p>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <p><strong>Customer:</strong> {{ task.customer.user.username }}</p>
+  <p>
+    <strong>Worker:</strong> {% if task.status == 'requested' %}No worker has
+    accepted the task yet{% else %}{{ task.worker.user.username }} {% endif %}
+  </p>
+  <p><strong>Start Time:</strong> {{ task.start_time }}</p>
+  <p><strong>End Time:</strong> {{ task.end_time }}</p>
+  <p><strong>Location:</strong> {{ task.location }}</p>
+  <p>
+    <strong>Hourly Rate:</strong>{% if task.status == 'requested' %} Not
+    available{% else %} {{ task.hourly_rate }}{% endif %}
+  </p>
+  <p>
+    <strong>Total Cost:</strong>{% if task.status == 'requested' %} Not
+    available{% else %} {{ task.total_cost }}{% endif %}
+  </p>
+  <p><strong>Created Time:</strong> {{ task.created_time }}</p>
+  <p><strong>Last Updated Time:</strong> {{ task.last_updated_time }}</p>
+  <p><strong>Status:</strong> {{ task.status }}</p>
+
+  {% if task.status == 'completed' and user.is_customer and not task.rating %}
+  <form method="post" action="{% url 'tasks:task_rate' task.pk %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_rating">Rating:</label>
+      <select class="form-control" name="rating" id="id_rating" required>
+        <option value="">-- Select rating --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="id_review">Review:</label>
+      <textarea
+        class="form-control"
+        name="review"
+        id="id_review"
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+  </form>
+  {% elif task.status == 'completed' and user.is_customer and task.rating %}
+  <p><strong>Rating:</strong> {{ task.rating }}</p>
+  <p><strong>Review:</strong> {{ task.review }}</p>
+  {% elif task.status == 'completed' and user.is_worker and task.rating %}
+  <p><strong>Rating:</strong> {{ task.rating }}</p>
+  <p><strong>Review:</strong> {{ task.review }}</p>
+  {% endif %} {% if user.is_worker and task.status == 'requested' %}
+  <a href="{% url 'tasks:task_update' task.pk %}" class="btn btn-primary"
+    >Update Status</a
+  >
+  {% endif %} {% if user.is_worker and task.status == 'in-progress' %}
+  <a href="{% url 'tasks:task_update' task.pk %}" class="btn btn-primary"
+    >Update Status</a
+  >
+  {% endif %} {% endblock %}
+</div>

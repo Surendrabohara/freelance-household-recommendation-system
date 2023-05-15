@@ -1,0 +1,74 @@
+{% extends 'users/base.html' %} {% block content %}
+<div class="container pt-3">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      {% if customer %}
+      <h2 class="text-center">Your Profile(Customer)</h2>
+      {% elif worker %}
+      <h2 class="text-center">Your Profile(Worker)</h2>
+      {% endif %}
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>Username</th>
+            <td>{{ user.username }}</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+          </tr>
+          <tr>
+            <th>Phone Number</th>
+            <td>{{ user.phone_number }}</td>
+          </tr>
+          {% if customer %}
+          <tr>
+            <th>Location</th>
+            <td>{{ customer.location }}</td>
+          </tr>
+          <tr>
+            <th>Profile Picture</th>
+            <td>
+              <img
+                src="{{ customer.profile_picture.url }}"
+                alt="Profile Picture"
+                width="150"
+                height="150"
+              />
+            </td>
+          </tr>
+          {% elif worker %}
+          <tr>
+            <th>Location</th>
+            <td>{{ worker.location }}</td>
+          </tr>
+          <tr>
+            <th>Skills</th>
+            <td>{{ worker.skills }}</td>
+          </tr>
+          <tr>
+            <th>Hourly Rate</th>
+            <td>{{ worker.hourly_rate }}</td>
+          </tr>
+          <tr>
+            <th>Is Available</th>
+            <td>{{ worker.is_available|yesno:"Yes,No" }}</td>
+          </tr>
+          <tr>
+            <th>Profile Picture</th>
+            <td>
+              <img
+                src="{{ worker.profile_picture.url }}"
+                alt="Profile Picture"
+                width="150"
+                height="150"
+              />
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

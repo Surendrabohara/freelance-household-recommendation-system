@@ -1,0 +1,34 @@
+{% extends 'users/base.html' %} {% block content %} {% if user.is_customer %}
+<div class="container pt-3">
+  <div class="row align-items-center justify-content-center">
+    <div class="col-md-6 text-center">
+      <a
+        href="{% url 'tasks:task_create_button' %}"
+        class="btn btn-success btn-lg text-white"
+        >Request a Task</a
+      >
+    </div>
+    <div class="col-md-6 text-center border-left bg-light">
+      <h2
+        class="text-dark mb-4 pt-3 text-dark"
+        style="font-size: 30px !important"
+      >
+        Latest Task Notifications
+      </h2>
+      {% if task_notifications %}
+      <ul class="list-unstyled">
+        {% for notification in task_notifications %}
+        <li class="mb-2">{{ notification.message }}</li>
+        <hr />
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No notifications found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endif %}
+<!-- all workers Ends here -->
+{% endblock %}
